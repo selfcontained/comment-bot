@@ -1,6 +1,6 @@
 module.exports = {
   production: {
-    port: 8080,
+    port: process.env.PORT,
     cache: {
       store: 'memory'
     },
