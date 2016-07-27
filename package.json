@@ -1,7 +1,7 @@
 {
-  "name": "joke-bot",
+  "name": "comment-bot",
   "version": "1.0.0",
-  "description": "A Slack and Facebook Messenger Joke Bot",
+  "description": "A Slack Comment Bot",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/selfcontained/joke-bot.git"
+    "url": "https://github.com/maryx/comment-bot.git"
   },
-  "author": "Brad Harris",
+  "author": "Brad Harris & Mary",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/selfcontained/joke-bot/issues"
+    "url": "https://github.com/maryx/comment-bot/issues"
   },
   "dependencies": {
     "beepboop-botkit": "^1.4.0",
