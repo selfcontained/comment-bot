@@ -2,3 +2,6 @@ name: commentbot
 email: maryx@users.noreply.github.com
 description: commentbot comments on things.
 avatar: images/avatar.jpg
+config:
+  - name: NODE_ENV
+    global: true
