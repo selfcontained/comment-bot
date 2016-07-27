@@ -20,11 +20,6 @@ module.exports = (app) => {
     var slackUserId = resource.SlackUserID
 
     if (meta.isNew && slackUserId) {
-      app.track('team.added', {
-        distinct_id: resource.SlackTeamID,
-        teamName: resource.SlackTeamName,
-        userId: resource.SlackUserID
-      })
       app.log.info('welcoming user %s', slackUserId)
       bot.api.im.open({ user: slackUserId }, function (err, response) {
         if (err) {
@@ -32,40 +27,33 @@ module.exports = (app) => {
         }
         var dmChannel = response.channel.id
         bot.say({channel: dmChannel, text: 'Thanks for adding me to your team!'})
-        bot.say({channel: dmChannel, text: 'In order for the rofls and lols to start flowing, just /invite me to a channel!'})
+        bot.say({channel: dmChannel, text: '/invite me to a channel!'})
       })
     }
   })
 
   var atBot = ['direct_message', 'direct_mention', 'mention']
 
-  controller.hears('joke', atBot, (bot, message) => {
+  controller.hears('comment', atBot, (bot, message) => {
     // filter out a matching slash command
-    if (message.text === '/joke') {
+    if (message.text === '/comment') {
       return
     }
 
     bot.startTyping(message)
 
-    app.jokes.newJoke(message.team, (err, joke, jokeId) => {
+    app.comments.newComment(message.team, (err, comment, commentId) => {
       if (err) {
         app.log.error(err.message)
       }
 
-      app.track('joke.requested', {
-        distinct_id: message.team,
-        teamName: bot.team_info.name,
-        teamDomain: bot.team_info.domain,
-        jokeId: jokeId,
-        joke: joke
-      })
-      bot.reply(message, joke || app.messages('NO_JOKE'))
+      bot.reply(message, comment || app.messages('NO_COMMENT'))
     })
   })
 
-  controller.hears('joke', ['ambient'], (bot, message) => {
+  controller.hears('yahoo', ['ambient'], (bot, message) => {
     // filter out a matching slash command
-    if (message.text === '/joke') {
+    if (message.text === '/comment') {
       return
     }
     // limit the amount of ambient responses
@@ -73,82 +61,46 @@ module.exports = (app) => {
       return
     }
 
-    bot.reply(message, app.messages('HEARD_JOKE'))
+    bot.reply(message, app.messages('HEARD_YAHOO'))
     bot.startTyping(message)
 
-    app.jokes.newJoke(message.team, (err, joke, jokeId) => {
+    app.comment.newComment(message.team, (err, comment, commentId) => {
       if (err) {
         app.log.error(err.message)
       }
 
-      app.track('joke.ambient', {
-        distinct_id: message.team,
-        teamName: bot.team_info.name,
-        teamDomain: bot.team_info.domain,
-        jokeId: jokeId,
-        joke: joke
-      })
-
-      // make it seem like bot is typing a joke for a bit
+      // make it seem like bot is typing a comment for a bit
       setTimeout(() => {
-        bot.reply(message, joke || app.messages('NO_JOKE_INITIATED'))
+        bot.reply(message, comment || app.messages('NO_COMMENT_INITIATED'))
       }, 2000)
     })
   })
 
-  controller.hears(['lol', 'rofl', 'haha', 'hehe', 'lmao'], ['ambient'], (bot, message) => {
+  controller.hears(['great', 'wow', 'genius', 'seriously', 'yeah right', 'whatever', '...', 'lmao'], ['ambient'], (bot, message) => {
     // limit the amount of ambient responses
     if (!ambientCheck(message.team)) {
       return
     }
 
-    bot.reply(message, app.messages('HEARD_FUNNY'))
+    bot.reply(message, app.messages('HEARD_SARCASM'))
     bot.startTyping(message)
 
-    app.jokes.newJoke(message.team, (err, joke, jokeId) => {
+    app.comments.newComment(message.team, (err, comment, commentId) => {
       if (err) {
         app.log.error(err.message)
       }
-
-      app.track('joke.ambient.lol', {
-        distinct_id: message.team,
-        teamName: bot.team_info.name,
-        teamDomain: bot.team_info.domain,
-        jokeId: jokeId,
-        joke: joke
-      })
-
-      // make it seem like bot is typing a joke for a bit
+      // make it seem like bot is typing a comment for a bit
       setTimeout(() => {
-        bot.reply(message, joke || app.messages('NO_JOKE_INITIATED'))
+        bot.reply(message, comment || app.messages('NO_COMMENT_INITIATED'))
       }, 2000)
     })
   })
 
-  controller.hears(['thanks', 'thnx'], atBot, (bot, message) => {
-    app.track('thanks.reply', {
-      distinct_id: message.team,
-      teamName: bot.team_info.name,
-      teamDomain: bot.team_info.domain
-    })
-    bot.reply(message, app.messages('YOUR_WELCOME'))
-  })
-
-  controller.hears(['good one', 'nice'], atBot, (bot, message) => {
-    app.track('nice.reply', {
-      distinct_id: message.team,
-      teamName: bot.team_info.name,
-      teamDomain: bot.team_info.domain
-    })
+  controller.hears(['good one', 'nice', 'thanks', 'wow'], atBot, (bot, message) => {
     bot.reply(message, app.messages('THANKS'))
   })
 
   controller.hears(['help', 'what do you do'], atBot, (bot, message) => {
-    app.track('help.reply', {
-      distinct_id: message.team,
-      teamName: bot.team_info.name,
-      teamDomain: bot.team_info.domain
-    })
     bot.reply(message, app.messages('HELP'))
   })
 }

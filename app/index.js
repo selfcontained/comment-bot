@@ -24,8 +24,6 @@ module.exports = (config) => {
     debug: true
   })
 
-  app.track = require('./track/')(app)
-
   // Setup webserver
   app.http = express()
   app.http.use(morgan(':date[iso] - :method :url :status :res[content-length] - :response-time ms'))
@@ -37,43 +35,42 @@ module.exports = (config) => {
     })
   })
 
-  // Setup jokes api and test routes
-  app.jokes = require('./jokes/')(app)
-  app.http.get('/jokes', (req, res) => {
-    app.jokes.all((err, jokes) => {
+  // Setup comments api and test routes
+  app.comments = require('./comments/')(app)
+  app.http.get('/comments', (req, res) => {
+    app.comments.all((err, comments) => {
       if (err) {
-        app.log.error('Error fetching jokes: ', err.message)
+        app.log.error('Error fetching comments: ', err.message)
         res.send(err.message)
       }
 
-      res.json(jokes)
+      res.json(comments)
     })
   })
-  app.http.get('/jokes/random', (req, res) => {
-    app.jokes.random((err, joke) => {
+  app.http.get('/comments/random', (req, res) => {
+    app.comments.random((err, comment) => {
       if (err) {
-        app.log.error('Error fetching jokes: ', err.message)
+        app.log.error('Error fetching comments: ', err.message)
         return res.send(err.message)
       }
 
-      res.send(joke)
+      res.send(comment)
     })
   })
-  app.http.get('/jokes/new-random/:identifier', (req, res) => {
-    app.jokes.newJoke(req.params.identifier, (err, joke) => {
+  app.http.get('/comments/new-random/:identifier', (req, res) => {
+    app.comments.newComment(req.params.identifier, (err, comment) => {
       if (err) {
-        app.log.error('Error fetching jokes: ', err.message)
+        app.log.error('Error fetching comments: ', err.message)
         return res.send(err.message)
       }
 
-      res.send(joke)
+      res.send(comment)
     })
   })
 
-  // mount persist, slack & facebook routers
+  // mount persist and slack routers
   app.http.use('/persist', require('./persist/')(app))
   app.http.use('/slack', require('./slack/')(app))
-  app.log.facebook('Slack routes registered')
 
   app.http.listen(app.config.port, (err) => {
     if (err) {

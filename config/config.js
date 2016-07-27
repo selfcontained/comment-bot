@@ -3,18 +3,11 @@ module.exports = {
     port: process.env.PORT,
     spreadsheet: {
       ttl: '15 minutes',
-      id: '1v5e3261-S7dxMONglcgnGwSWgiN7_rStiXEu8TBFV4k',
+      id: '1gn9Cpk7H8uK5ADhlUSHvNqdzwBLsLIYe0JY7IjOomyg',
       sheet: 1
-    },
-    mixpanel: {
-      token: process.env.MIXPANEL_TOKEN
     },
     slack: {
       verifyToken: process.env.SLACK_VERIFY_TOKEN
-    },
-    facebook: {
-      verifyToken: process.env.FACEBOOK_VERIFY_TOKEN,
-      accessToken: process.env.FACEBOOK_PAGE_ACCESS_TOKEN
     },
     cache: {
       store: 'redis',
@@ -31,13 +24,11 @@ module.exports = {
         debug: 'rainbow',
         beepboop: 'magenta',
         botkit: 'yellow',
-        facebook: 'blue',
         info: 'green',
         error: 'red'
       },
       enabled: {
         debug: false,
-        facebook: true,
         beepboop: true,
         botkit: true,
         info: true,
