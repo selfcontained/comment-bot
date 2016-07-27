@@ -2,18 +2,3 @@ name: commentbot
 email: maryx@users.noreply.github.com
 description: commentbot comments on things.
 avatar: images/avatar.jpg
-config:
-  - name: NODE_ENV
-    global: true
-  - name: REDIS_HOST
-    global: true
-    type: secret
-  - name: REDIS_PORT
-    global: true
-    type: secret
-  - name: REDIS_PASS
-    global: true
-    type: secret
-  - name: MIXPANEL_TOKEN
-    global: true
-    type: secret
