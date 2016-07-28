@@ -3,7 +3,7 @@ module.exports = {
         port: process.env.PORT,
         spreadsheet: {
             ttl: '15 minutes',
-            id: process.env.GOOGLE_DOC,
+            id: '1gn9Cpk7H8uK5ADhlUSHvNqdzwBLsLIYe0JY7IjOomyg'
             sheet: 1
         },
         slack: {

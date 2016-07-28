@@ -96,7 +96,7 @@ module.exports = (app) => {
     })
   })
 
-  controller.hears(['good one', 'nice', 'thanks', 'wow'], atBot, (bot, message) => {
+  controller.hears(['good one', 'nice', 'thanks'], atBot, (bot, message) => {
     bot.reply(message, app.messages('THANKS'))
   })
 
