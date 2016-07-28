@@ -7,12 +7,3 @@ config:
     global: true
   - name: GOOGLE_DOC
     global: true
-  - name: REDIS_HOST
-    global: true
-    type: secret
-  - name: REDIS_PORT
-    global: true
-    type: secret
-  - name: REDIS_PASS
-    global: true
-    type: secret

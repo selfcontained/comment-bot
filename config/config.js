@@ -10,12 +10,7 @@ module.exports = {
             verifyToken: process.env.SLACK_VERIFY_TOKEN
         },
         cache: {
-            store: 'redis',
-            host: process.env.REDIS_HOST,
-            port: process.env.REDIS_PORT,
-            options: {
-                password: process.env.REDIS_PASS
-            }
+            store: 'memory'
         },
         logging: {
             colorize: false,
@@ -24,13 +19,11 @@ module.exports = {
                 debug: 'rainbow',
                 beepboop: 'magenta',
                 botkit: 'yellow',
-                facebook: 'blue',
                 info: 'green',
                 error: 'red'
             },
             enabled: {
                 debug: false,
-                facebook: true,
                 beepboop: true,
                 botkit: true,
                 info: true,
