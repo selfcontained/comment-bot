@@ -9,7 +9,7 @@ module.exports = function (key, params) {
   var value = messages[key]
 
   if (!value) {
-    return 'I got nothin...'
+    return 'I have nothing witty to say...'
   }
 
   if (Array.isArray(value)) {
