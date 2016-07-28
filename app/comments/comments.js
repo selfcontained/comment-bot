@@ -3,12 +3,12 @@ const GoogleSpreadsheet = require('google-spreadsheet')
 module.exports = (app) => {
   var LAST_COMMENTS = []
   var config = app.config.spreadsheet
-  var sheet = new GoogleSpreadsheet(config.id)
+  var doc = new GoogleSpreadsheet(config.id)
 
   return function getComments (done) {
       app.log.info('loading comments from google...')
 
-      sheet.getRows(config.sheet, (err, rows) => {
+      doc.getRows(config.sheet, (err, rows) => {
         if (err) {
           // Treat errors by sending the last good set of comments
           if (LAST_COMMENTS.length > 0) {
@@ -31,7 +31,7 @@ module.exports = (app) => {
         var comments = rows.map((row) => {
           return row.comment
         })
-
+          console.log(comments)
         // Keep a local ref of last good set of comments
         LAST_COMMENTS = comments
 

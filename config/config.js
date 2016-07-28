@@ -2,7 +2,7 @@ module.exports = {
     production: {
         port: process.env.PORT,
         spreadsheet: {
-            id: '1v5e3261-S7dxMONglcgnGwSWgiN7_rStiXEu8TBFV4k', //1gn9Cpk7H8uK5ADhlUSHvNqdzwBLsLIYe0JY7IjOomyg',
+            id: '1gn9Cpk7H8uK5ADhlUSHvNqdzwBLsLIYe0JY7IjOomyg',
             sheet: 1
         },
         slack: {
