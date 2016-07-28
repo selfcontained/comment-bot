@@ -6,7 +6,6 @@ module.exports = (app) => {
   var sheet = new GoogleSpreadsheet(config.id)
 
   return function getComments (done) {
-    app.cache.get('comments', (key, callback) => {
       app.log.info('loading comments from google...')
 
       sheet.getRows(config.sheet, (err, rows) => {
@@ -36,8 +35,7 @@ module.exports = (app) => {
         // Keep a local ref of last good set of comments
         LAST_COMMENTS = comments
 
-        callback(null, comments)
+        done(null, comments)
       })
-    }, config.ttl, done)
   }
 }
