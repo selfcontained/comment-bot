@@ -1,4 +1,4 @@
-const sampledThreshold = 0.05
+const sampledThreshold = 1
 const teamThrottleMS = 2 * 60 * 60 * 1000 // 2 hours
 
 module.exports = function (app) {
@@ -10,11 +10,11 @@ module.exports = function (app) {
       return false
     }
 
-    // // Check if we sent an ambient message recently
-    // if (teamsLastAmbient[team] && teamsLastAmbient[team] > (Date.now() - teamThrottleMS)) {
-    //   app.log.info('sent an ambient response too recently to %s', team)
-    //   return false
-    // }
+    // Check if we sent an ambient message recently
+    if (teamsLastAmbient[team] && teamsLastAmbient[team] > (Date.now() - teamThrottleMS)) {
+      app.log.info('sent an ambient response too recently to %s', team)
+      return false
+    }
 
     teamsLastAmbient[team] = Date.now()
 
