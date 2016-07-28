@@ -2,6 +2,7 @@ module.exports = {
     production: {
         port: process.env.PORT,
         spreadsheet: {
+            ttl: '15 minutes',
             id: '1gn9Cpk7H8uK5ADhlUSHvNqdzwBLsLIYe0JY7IjOomyg',
             sheet: 1
         },
