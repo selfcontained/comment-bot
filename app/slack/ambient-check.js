@@ -5,10 +5,10 @@ module.exports = function (app) {
   var teamsLastAmbient = {}
 
   return function ambientCheck (team) {
-    // var sendMessage = Math.random() > sampledThreshold
-    // if (!sendMessage) {
-    //   return false
-    // }
+    var sendMessage = Math.random() > sampledThreshold
+    if (!sendMessage) {
+      return false
+    }
 
     // // Check if we sent an ambient message recently
     // if (teamsLastAmbient[team] && teamsLastAmbient[team] > (Date.now() - teamThrottleMS)) {
@@ -16,7 +16,7 @@ module.exports = function (app) {
     //   return false
     // }
 
-    // teamsLastAmbient[team] = Date.now()
+    teamsLastAmbient[team] = Date.now()
 
     return sendMessage
   }
